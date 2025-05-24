@@ -8,7 +8,7 @@ export default defineConfig({
   	// base: 'brahmandDB-docs',
 	integrations: [
 		starlight({
-			title: 'BrahmandDB',
+			title: 'Brahmand',
 			// customCss: [
 			// 	// Relative path to your custom CSS file
 			// 	'./src/styles/custom.css',
@@ -23,7 +23,7 @@ export default defineConfig({
                     link: '/home',
                 },
 				{
-					label: 'Install BrahmandDB',
+					label: 'Install Brahmand',
 					items: [
 						{ label: 'Installation', slug: 'installation/install' },
 					],

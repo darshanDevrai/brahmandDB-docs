@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: How to install and run BrahmandDB and the Brahmand client
+description: How to install and run Brahmand and the Brahmand client
 ---
 
 ## Requirements
@@ -18,9 +18,9 @@ If you prefer containerized deployment, pull the official image and run it:
 # Pull the latest image
 docker pull darshandevrai/brahmand:latest
 
-# Run BrahmandDB
+# Run Brahmand
 docker run -d \
-  --name brahmanddb \
+  --name Brahmand \
   -e CLICKHOUSE_URL=http://localhost:8123 \
   -e CLICKHOUSE_USER=default \
   -e CLICKHOUSE_PASSWORD="" \
@@ -58,7 +58,7 @@ docker run --rm -it \
    sudo mv brahmand /usr/local/bin/
    sudo mv brahmand-client /usr/local/bin/
    ```
-4. Run BrahmandDB
+4. Run Brahmand
    ```bash
     CLICKHOUSE_URL="<clickhouse_url>" \
     CLICKHOUSE_USER="<clickhouse_user>" \
@@ -71,5 +71,5 @@ docker run --rm -it \
 5. Connect cli
 
    ```bash
-    brahmand-client --url <brahmandDB URL> # e.g. http://localhost:3000
+    brahmand-client --url <Brahmand URL> # e.g. http://localhost:3000
    ```
