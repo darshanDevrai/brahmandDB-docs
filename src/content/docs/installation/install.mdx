@@ -1,0 +1,75 @@
+---
+title: Installation
+description: How to install and run BrahmandDB and the Brahmand client
+---
+
+## Requirements
+
+Before you begin, make sure you have:
+- A **ClickHouse** instance running (e.g., your `clickhouse-service` container)  
+- **Docker** (if you choose the containerized deployment route)
+
+---
+
+## Installation via Docker
+If you prefer containerized deployment, pull the official image and run it:
+
+```bash
+# Pull the latest image
+docker pull darshandevrai/brahmand:latest
+
+# Run BrahmandDB
+docker run -d \
+  --name brahmanddb \
+  -e CLICKHOUSE_URL=http://localhost:8123 \
+  -e CLICKHOUSE_USER=default \
+  -e CLICKHOUSE_PASSWORD="" \
+  -e CLICKHOUSE_DATABASE=test_g \
+  darshandevrai/brahmand:latest
+
+
+```
+To run the client interactively:
+
+```bash
+docker run --rm -it \
+  -e CLICKHOUSE_URL=http://localhost:8123 \
+  -e CLICKHOUSE_USER=default \
+  -e CLICKHOUSE_PASSWORD="" \
+  -e CLICKHOUSE_DATABASE=test_g \
+  darshandevrai/brahmand:latest \
+  brahmand-client 
+
+```
+
+## Installation via GitHub Releases
+
+1. Navigate to the [Releases page](https://github.com/<OWNER>/<REPO>/releases).  
+2. Download the binary for your platform:  
+   - **Linux (GNU)**: `brahmand-linux-amd64.tar.gz`, cli: `brahmand-client-linux-amd64.tar.gz`
+   - **macOS (Intel)**: `brahmand-macos-amd64.tar.gz`, cli: `brahmand-client-macos-amd64.tar.gz`  
+   - **macOS (Apple Silicon)**: `brahmand-macos-arm64.tar.gz`, cli: `brahmand-client-macos-arm64.tar.gz`
+   - **Windows**: `brahmand-win-amd64.zip`, cli: `brahmand-client-win-amd64.zip`
+3. Extract and move the binaries:
+   ```bash
+   # Example for Linux/macOS (GNU)
+   tar -xzf brahmand-linux-amd64.tar.gz
+   tar -xzf brahmand-client-linux-amd64.tar.gz
+   sudo mv brahmand /usr/local/bin/
+   sudo mv brahmand-client /usr/local/bin/
+   ```
+4. Run BrahmandDB
+   ```bash
+    CLICKHOUSE_URL="<clickhouse_url>" \
+    CLICKHOUSE_USER="<clickhouse_user>" \
+    CLICKHOUSE_PASSWORD="<clickhouse_password>" \
+    CLICKHOUSE_DATABASE="<clickhouse_db>" \
+    brahmand
+
+
+   ```
+5. Connect cli
+
+   ```bash
+    brahmand-client --url <brahmandDB URL> # e.g. http://localhost:3000
+   ```

@@ -1,36 +1,42 @@
 ---
-title: Welcome to Starlight
+title: BrahmandDB - An Open Source graph database built on top of ClickHouse.
 description: Get started building your docs site with Starlight.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Brahmand (Sanskrit for Universe)
   image:
-    file: ../../assets/houston.webp
+    html: |
+       <img style="margin-left:15%; width:160px; height:240px" src="logo.svg" alt="B Graph"/>
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Get Started
+      link: /installation/install/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Docs
+      link: /home
       icon: external
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+## Features
+
+<CardGrid>
+	<Card title="ClickHouse-native" icon="rocket">
+		Extends ClickHouse with native graph modeling, merging OLAP speed with graph analysis.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+
+	<Card title="High-Performance Traversals" icon="seti:rust">
+		Rust-powered graph layer and ClickHouse execution deliver sub-second, multi-hop graph queries at scale.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+
+	<Card title="Cypher Query Language" icon="add-document">
+		Use industry-standard Cypher for intuitive, expressive property-graph querying.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+
+	<Card title="Stateless" icon="seti:db">
+		Offloading all storage and query execution to ClickHouse—so you can run it alongside your ClickHouse cluster.
 	</Card>
+
 </CardGrid>
