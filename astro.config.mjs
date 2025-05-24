@@ -4,8 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://darshanDevrai.github.io',
-  	base: 'brahmandDB-docs',
+	site: 'https://brahmanddb.com/',
+  	// base: 'brahmandDB-docs',
 	integrations: [
 		starlight({
 			title: 'BrahmandDB',
