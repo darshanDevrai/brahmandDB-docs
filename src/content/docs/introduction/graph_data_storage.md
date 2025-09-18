@@ -16,7 +16,7 @@ Let's take the same example with
 
 
 
-Brahmand translates high-level Cypher DDL into ClickHouse tables and materialized views, optimizing both storage and traversal performance.
+Brahmand translates high-level Cypher DDL into ClickHouse tables.  
 
 ## Example
 
@@ -74,8 +74,20 @@ CREATE TABLE CREAETED(
 ) ENGINE = MergeTree
 ORDER BY(from_user, to_post);
 
+```
 
+## Edge Indexes (WIP)
+Work is underway on edge indexes using materialized views and bitmaps to improve both storage efficiency and traversal performance.
+Use `ADJ INDEX` when creating a bitmap index on an edge. Currently, bidirectional indexes are created by default, but once the feature matures, the API will support unidirectional indexes.
 
+```cypher
+CREATE REL TABLE CREATED(From User To Post, ADJ INDEX(true));
+
+```
+
+![Graph Example With Index](./graph_example_with_index.png)
+
+```sql
 -- edge index - Created outgoing direction
 CREATE TABLE CREAETED_outgoing(
     from_id UInt64,
@@ -112,17 +124,10 @@ GROUP BY from_id;
 
 ```
 
-## Bi-directional Indexes
-By maintaining both outgoing and incoming edge indexes, BrahmandDB supports efficient bi-directional traversals without additional query-time joins.
-
-## Bitmap-Based Edge Index Storage
+### Bitmap-Based Edge Index Storage
 
 Edges are stored using ClickHouse’s Roaring Bitmap (via AggregateFunction(groupBitmap, UInt64)), offering:
 
 * High compression of large integer sets
 
-* Fast set operations for union/intersection during traversals
-
-This combination of MergeTree tables, AggregatingMergeTree edge indexes, and materialized views delivers both storage efficiency and traversal speed at analytical scale.
-
-<!-- Another important thing is we are storing the edge list in bitmaps. ClickHouse uses Roaring Bitmaps under the hood which are very efficient in storing large number of integers and it is optimized for set operations. This is crucial optimization for graph traversals. -->
+* Fast set operations for union/intersection during traversals (WIP)

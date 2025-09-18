@@ -34,7 +34,7 @@ userId,username,account_creation_date
 1,Frodo,2025-09-09
 2,Sam,2025-01-27
 3,Aragon,2025-02-25
-4,Gandolf,2025-05-11
+4,Gandalf,2025-05-11
 5,Sauron,2025-06-11
 6,Saruman,2025-03-11
 ```
@@ -164,6 +164,20 @@ To check tables and materialized views created by Brahmand, run:
 ```SQL
 SHOW TABLES;
 ```
+
+```
+   ┌─name──────────┐
+1. │ FOLLOWS       │
+2. │ LIKES         │
+3. │ POSTS         │
+4. │ Post          │
+5. │ User          │
+6. │ graph_catalog │
+   └───────────────┘
+
+```
+
+If we use ADJ INDEXES then it would be - 
 ```
     ┌─name────────────────┐
  1. │ FOLLOWS             │
@@ -177,7 +191,7 @@ SHOW TABLES;
  9. │ POSTS_outgoing      │
 10. │ Post                │
 11. │ User                │
-12. │ graph_meta          │
+12. │ graph_catalog       │
 13. │ mv_FOLLOWS_incoming │
 14. │ mv_FOLLOWS_outgoing │
 15. │ mv_LIKES_incoming   │

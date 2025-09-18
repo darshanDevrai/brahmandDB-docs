@@ -22,7 +22,7 @@ RETURN a.userId, a.username, a.account_creation_date LIMIT 3;
 ```
    ┌─userId─┬─username─┬─account_creation_date─┐
 1. │      3 │ Aragon   │   2025-02-25 00:00:00 │
-2. │      4 │ Gandolf  │   2025-05-11 00:00:00 │
+2. │      4 │ Gandalf  │   2025-05-11 00:00:00 │
 3. │      5 │ Sauron   │   2025-06-11 00:00:00 │
    └────────┴──────────┴───────────────────────┘
 
@@ -40,7 +40,7 @@ This will give users who has liked any post.
 ```
    ┌─userId─┬─username─┬─account_creation_date─┐
 1. │      3 │ Aragon   │   2025-02-25 00:00:00 │
-2. │      4 │ Gandolf  │   2025-05-11 00:00:00 │
+2. │      4 │ Gandalf  │   2025-05-11 00:00:00 │
 3. │      2 │ Sam      │   2025-01-27 00:00:00 │
 4. │      1 │ Frodo    │   2025-09-09 00:00:00 │
    └────────┴──────────┴───────────────────────┘
@@ -76,7 +76,7 @@ LIMIT 5;
 ```
    ┌─user1─┬─user2─┬─user3───┐
 1. │ Sam   │ Frodo │ Aragon  │
-2. │ Sam   │ Frodo │ Gandolf │
+2. │ Sam   │ Frodo │ Gandalf │
    └───────┴───────┴─────────┘
 
 
@@ -145,7 +145,7 @@ LIMIT 3;
 ```
    ┌─username─┬─num_posts─┐
 1. │ Aragon   │         2 │
-2. │ Gandolf  │         1 │
+2. │ Gandalf  │         1 │
 3. │ Sam      │         1 │
    └──────────┴───────────┘
 
