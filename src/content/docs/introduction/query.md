@@ -10,7 +10,7 @@ Brahmand processes each Cypher query in three high-level phases:
 
 1. **Parse & Anchor Selection**  
    - Identify an “anchor” node to start traversal.  
-   - Current heuristic: pick the node with the most `WHERE` predicates; if tied, choose the node with more properties referenced in `RETURN`.  
+   - Current heuristic: pick the node with the most `WHERE` predicates.  
    - (Future: cost-based optimization.)
 
 2. **Traversal Planning**  
@@ -25,40 +25,44 @@ Brahmand processes each Cypher query in three high-level phases:
 ### Cypher Query
 
 ```cypher
-MATCH (p:Post)-[:CREATED]->(u:User)
-WHERE p.PostTypeId = 2
-RETURN u.UserId AS UserId, u.DisplayName
-ORDER BY p.created_date DESC
-LIMIT 10;
+MATCH (a:User)-[:LIKES]->(p:Post)
+WHERE a.account_creation_date < DATE('2025-02-01')
+RETURN a.username, a.account_creation_date, COUNT(p) AS num_posts
+LIMIT 3;
 ```
 
 ### ClickHouse SQL query
 ```sql
-WITH Post_p AS (
-    SELECT postId FROM Post WHERE PostTypeId = 2
-),
-CREATED_incoming_ab7d65838c AS (
+WITH User_a AS (
     SELECT 
-        from_id, 
-        arrayJoin(bitmapToArray(to_id)) AS to_id 
-    FROM CREATED_incoming WHERE from_id IN (SELECT postId FROM Post_p)
+      username, 
+      account_creation_date, 
+      userId
+    FROM User
+    WHERE account_creation_date < DATE('2025-02-01')
+), 
+LIKES_a0e174cec8 AS (
+    SELECT 
+      from_User AS from_id, 
+      to_Post AS to_id
+    FROM LIKES
+    WHERE from_id IN (SELECT userId FROM User_a)
 )
 SELECT 
-    u.UserId AS UserId, 
-    u.DisplayName 
-FROM User AS u    
-JOIN CREATED_incoming_ab7d65838c AS ab7d65838c 
-ON ab7d65838c.to_id = u.UserId 
-JOIN Post_p AS p ON p.postId = ab7d65838c.from_id   
-GROUP BY UserId, u.DisplayName 
-ORDER BY p.created_date DESC  
-LIMIT 10
+      a.username, 
+      a.account_creation_date, 
+      COUNT(p.postId) AS num_posts
+FROM Post AS p
+INNER JOIN LIKES_a0e174cec8 AS a0e174cec8 ON a0e174cec8.to_id = p.postId
+INNER JOIN User_a AS a ON a.userId = a0e174cec8.from_id
+GROUP BY a.username, a.account_creation_date
+LIMIT  3  
 ```
 
 <!-- **Explanation:** -->
 #### Explanation:
 
-- **Anchor Node**: Only `Post` has a `WHERE` filter, so it becomes the anchor.
-- **Early Filtering**: Applying `PostTypeId = 2` in the `Post_p` CTE limits the data scanned.
-- **Edge Traversal**: Traverses the `CREATED` relationship via `CREATED_incoming`.
-- **Final Join**: Joins the `User` and `Post_p` CTEs, then applies `GROUP BY`, `ORDER BY`, and `LIMIT` to produce the final result.
+- **Anchor Node**: Only `User` has a `WHERE` filter, so it becomes the anchor.
+- **Early Filtering**: Applying `account_creation_date < DATE('2025-02-01')` in the `User_a` CTE limits the data scanned.
+- **Edge Traversal**: Traverses the `LIKES` relationship via `LIKES_a0e174cec8`.
+- **Final Join**: Joins the `User_a`  CTEs with `Post` table, then applies `GROUP BY`, and `LIMIT` to produce the final result.

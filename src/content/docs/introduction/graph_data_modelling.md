@@ -77,6 +77,7 @@ Edges:      Merge Family tables like MergeTree, ReplacingMergeTree for edge list
             Columns: (from, to, props...)
             e.g (1, 3, props...)
 ```
+Work is underway on edge indexes using materialized views and bitmaps to improve both storage efficiency and traversal performance.
 ```json
 Edge-Index: AggregatingMergeTree table for adjacency list. 
             One for each direction.

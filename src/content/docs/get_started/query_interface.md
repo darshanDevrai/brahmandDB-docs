@@ -32,7 +32,6 @@ Executes a Cypher query against the brahmand graph database and returns the resu
 | ------- | ------ | -------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------- |
 | `query` | string | Yes      | —              | A Cypher query string to execute.                            | —                                                  |
 | `format`| string | No       | `JSONEachRow`  | Output serialization format.                                 | `JSONEachRow`, `Pretty`, `PrettyCompact`, `CSV`, `CSVWithNames` |
-| `mode`  | string | No       | `Cte`          | Traversal mode.                                              | `Cte`, `TempTable`                                 |
 
 ### Example
 
